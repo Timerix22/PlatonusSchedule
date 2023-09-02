@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Platonus.API;
 
-public class LoggindHttpHandler : DelegatingHandler
+public class LoggingHttpHandler : DelegatingHandler
 {
-    public LoggindHttpHandler(HttpMessageHandler innerHandler) : base(innerHandler)
+    public LoggingHttpHandler(HttpMessageHandler innerHandler) : base(innerHandler)
     { }
 
     void LogHttpRequest(HttpRequestMessage req)

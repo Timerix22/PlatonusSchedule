@@ -7,7 +7,7 @@ var loginCredentials = new LoginCredentials(
     ReadString("password"),
     PlatonusLanguage.English);
 await p.LoginAsync(loginCredentials);
-await p.GetScheduleAsync();
+var schedule = await p.GetScheduleAsync();
 return;
 
 string ReadString(string question)

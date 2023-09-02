@@ -1,6 +1,6 @@
 ﻿namespace Platonus.API.DataModels;
 
-class LoginResponse
+internal class LoginResponse
 {
     /// session_id
     public string? sid { get; set; }

@@ -30,7 +30,7 @@ public class PlatonusClient
         {
             CookieContainer = _cookies
         };
-        _http = new HttpClient(new LoggindHttpHandler(httpClientHandler))
+        _http = new HttpClient(new LoggingHttpHandler(httpClientHandler))
         {
             BaseAddress = new Uri(base_url)
         };
@@ -50,54 +50,35 @@ public class PlatonusClient
         _language = userCredentials.Language;
         reqContent.Headers.Add("language", _language.Number.ToString());
         
-
-        try
-        {
-            // send POST request
-            var res = await _http.PostAsync("rest/api/login", reqContent);
-            // parse json
-            if (res.Content.Headers.ContentLength < 1)
-                throw new Exception("responce doesn't have any content");
-            _loginResponse = await res.Content.ReadFromJsonAsync<LoginResponse>()
-                             ?? throw new Exception("invalid login request rezult");
-            if(_loginResponse.login_status != "success")
-                throw new Exception("invalid login request rezult");
-            
-            // set session id and user token headers in HttpClient
-            _http.DefaultRequestHeaders.Add("sid", _loginResponse.sid);
-            _http.DefaultRequestHeaders.Add("token", _loginResponse.auth_token);
-        }
-        catch (HttpRequestException re)
-        {
-            HandleRequestException(re);
-        }
+        // send POST request
+        var res = await _http.PostAsync("rest/api/login", reqContent);
+        // parse json
+        if (res.Content.Headers.ContentLength < 1)
+            throw new Exception("responce doesn't have any content");
+        _loginResponse = await res.Content.ReadFromJsonAsync<LoginResponse>()
+                         ?? throw new Exception("invalid login request rezult");
+        if(_loginResponse.login_status != "success")
+            throw new Exception("invalid login request rezult");
+        
+        // set session id and user token headers in HttpClient
+        _http.DefaultRequestHeaders.Add("sid", _loginResponse.sid);
+        _http.DefaultRequestHeaders.Add("token", _loginResponse.auth_token);
     }
 
-    public async Task GetScheduleAsync()
+    public async Task<Schedule> GetScheduleAsync()
     {
         if (_language is null)
             throw new Exception("language is null, you need to login");
         if (_loginResponse is null)
             throw new Exception("session id is null, you need to login");
 
-        try
-        {
-            var req = JsonContent.Create<ScheduleRequest>(new ScheduleRequest());
-            var res = await _http.PostAsync(
-                $"rest/schedule/userSchedule/student/initial/{_language.LiteralCode}",
-                req);
-            // var rezult = await res.Content.ReadFromJsonAsync<ScheduleResponseData>();
-        }
-        catch (HttpRequestException re)
-        {
-            HandleRequestException(re);
-        }
-
-    }
-
-    private void HandleRequestException(HttpRequestException re)
-    {
-        // TODO http exception handling
-        throw re;
+        var req = JsonContent.Create(new ScheduleRequest());
+        var res = await _http.PostAsync(
+            $"rest/schedule/userSchedule/student/initial/{_language.LiteralCode}",
+            req);
+        ScheduleResponse scheduleData = await res.Content.ReadFromJsonAsync<ScheduleResponse>()
+            ?? throw new NullReferenceException("ScheduleResponse is null");
+        var schedule = new Schedule(scheduleData);
+        return schedule;
     }
 }
