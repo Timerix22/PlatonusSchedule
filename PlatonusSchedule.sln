@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platonus.API", "Platonus.API\Platonus.API.csproj", "{3650802E-D79E-47FC-ADED-2D9D6AF80340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatonusSchedule.CLI", "PlatonusSchedule.CLI\PlatonusSchedule.CLI.csproj", "{B445963D-AB65-4138-912D-58A0A954A736}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3650802E-D79E-47FC-ADED-2D9D6AF80340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3650802E-D79E-47FC-ADED-2D9D6AF80340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3650802E-D79E-47FC-ADED-2D9D6AF80340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3650802E-D79E-47FC-ADED-2D9D6AF80340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B445963D-AB65-4138-912D-58A0A954A736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B445963D-AB65-4138-912D-58A0A954A736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B445963D-AB65-4138-912D-58A0A954A736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B445963D-AB65-4138-912D-58A0A954A736}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
