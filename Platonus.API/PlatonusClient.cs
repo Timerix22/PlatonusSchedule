@@ -11,9 +11,7 @@ namespace Platonus.API;
 public class PlatonusClient
 {
     private const string base_url = "https://platonus.iitu.edu.kz/";
-    public bool DebugHttpMessages;
-
-
+    
     private LoginResponse? _loginResponse;
     private PlatonusLanguage? _language;
     private HttpClient _http;
@@ -21,16 +19,16 @@ public class PlatonusClient
 
     public PlatonusClient()
     {
-#if DEBUG
-        // TODO disable http messages logging
-        DebugHttpMessages = true;
-#endif
         _cookies = new CookieContainer();
         var httpClientHandler = new HttpClientHandler
         {
             CookieContainer = _cookies
         };
-        _http = new HttpClient(new LoggingHttpHandler(httpClientHandler))
+        _http = new HttpClient(
+#if DEBUG
+            new LoggingHttpHandler
+#endif
+                (httpClientHandler))
         {
             BaseAddress = new Uri(base_url)
         };
