@@ -76,7 +76,7 @@ public class Schedule
     public class Day
     {
         public (TimeRange Time, Lesson? Lesson)[] LessonHours { get; }
-        internal DayOfWeek DayOfWeek { get; }
+        public DayOfWeek DayOfWeek { get; }
         internal Day(int dayIndex, int dayLessonsCount)
         {
             LessonHours = new (TimeRange, Lesson?)[dayLessonsCount];
