@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Platonus.API\Platonus.API.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="DTLib.Ben.Demystifier" Version="1.0.4" />
+    </ItemGroup>
+
 </Project>

@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using DTLib.Ben.Demystifier;
 using Platonus.API;
 using Platonus.API.DataModels;
 
 Console.InputEncoding = Encoding.UTF8;
 Console.OutputEncoding = Encoding.UTF8;
-var p = new PlatonusClient();
-var loginCredentials = new LoginCredentials(
-    ReadString("student id") + "@iitu.edu.kz",
-    ReadString("password", true),
-    PlatonusLanguage.Parse(ReadString("language (en/ru/kz)"))
-);
-await p.LoginAsync(loginCredentials);
-var schedule = await p.GetScheduleAsync();
-while (true)
+try
 {
+    var p = new PlatonusClient();
+    var loginCredentials = new LoginCredentials(
+        ReadString("student id") + "@iitu.edu.kz",
+        ReadString("password", true),
+        PlatonusLanguage.Parse(ReadString("language (en/ru/kz)"))
+    );
+    await p.LoginAsync(loginCredentials);
+    var schedule = await p.GetScheduleAsync();
     PrintSchedule(schedule);
-    Console.ReadKey();
 }
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToStringDemystified());
+}
+Console.Write("press [ENTER] to exit");
+Console.ReadLine();
 
 
 string ReadString(string question, bool hideInput = false)
